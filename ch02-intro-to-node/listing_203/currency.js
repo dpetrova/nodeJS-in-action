@@ -13,4 +13,5 @@ class Currency {
   }
 }
 
+//module.exports = exports = Currency
 module.exports = Currency;
