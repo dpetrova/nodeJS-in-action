@@ -1,37 +1,50 @@
-'use strict';
-const async = require('async');
-const exec = require('child_process').exec;
+//Using community tools for flow control
+//using Async to sequence tasks in a script that uses serial/parallel flow control
 
+"use strict";
+const async = require("async");
+const exec = require("child_process").exec;
+
+//Downloads Node source code for given version
 function downloadNodeVersion(version, destination, callback) {
   const url = `http://nodejs.org/dist/v${version}/node-v${version}.tar.gz`;
   const filepath = `${destination}/${version}.tgz`;
   exec(`curl ${url} > ${filepath}`, callback);
 }
 
-async.series([
-  callback => {
-    async.parallel([
-      callback => {
-        console.log('Downloading Node v4.4.7...');
-        downloadNodeVersion('4.4.7', '/tmp', callback);
-      },
-      callback => {
-        console.log('Downloading Node v6.3.0...');
-        downloadNodeVersion('6.3.0', '/tmp', callback);
-      }
-    ], callback);
-  },
-  callback => {
-    console.log('Creating archive of downloaded files...');
-    exec(
-      'tar cvf node_distros.tar /tmp/4.4.7.tgz /tmp/6.3.0.tgz',
-      err => {
+//Executes series of tasks in sequence
+async.series(
+  [
+    (callback) => {
+      //Executes downloads in parallel
+      async.parallel(
+        [
+          (callback) => {
+            console.log("Downloading Node v4.4.7...");
+            downloadNodeVersion("4.4.7", "/tmp", callback);
+          },
+          (callback) => {
+            console.log("Downloading Node v6.3.0...");
+            downloadNodeVersion("6.3.0", "/tmp", callback);
+          },
+        ],
+        callback
+      );
+    },
+    (callback) => {
+      console.log("Creating archive of downloaded files...");
+      //Creates archive file
+      exec("tar cvf node_distros.tar /tmp/4.4.7.tgz /tmp/6.3.0.tgz", (err) => {
         if (err) throw err;
-        console.log('All done!');
+        console.log("All done!");
         callback();
-      }
-    );
+      });
+    },
+  ],
+  (err, results) => {
+    if (err) throw err;
   }
-], (err, results) => {
-  if (err) throw err;
-});
+);
+
+//Because the Windows operating system doesn’t come with the tar and curl commands,
+//the following example won’t work in this operating system
