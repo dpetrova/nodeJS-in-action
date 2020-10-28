@@ -1,21 +1,23 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
-const Article = require('./db').Article;
+const Article = require("./db").Article; //Loads the database module
 
-app.set('port', process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3000);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/articles', (req, res, next) => {
+//Fetches all articles
+app.get("/articles", (req, res, next) => {
   Article.all((err, articles) => {
     if (err) return next(err);
     res.send(articles);
   });
 });
 
-app.get('/articles/:id', (req, res, next) => {
+//Finds a specific article by ID
+app.get("/articles/:id", (req, res, next) => {
   const id = req.params.id;
   Article.find(id, (err, article) => {
     if (err) return next(err);
@@ -23,16 +25,17 @@ app.get('/articles/:id', (req, res, next) => {
   });
 });
 
-app.delete('/articles/:id', (req, res, next) => {
+//Deletes an article by ID
+app.delete("/articles/:id", (req, res, next) => {
   const id = req.params.id;
   Article.delete(id, (err) => {
     if (err) return next(err);
-    res.send({ message: 'Deleted' });
+    res.send({ message: "Deleted" });
   });
 });
 
-app.listen(app.get('port'), () => {
-  console.log('App started on port', app.get('port'));
+app.listen(app.get("port"), () => {
+  console.log("App started on port", app.get("port"));
 });
 
 module.exports = app;
