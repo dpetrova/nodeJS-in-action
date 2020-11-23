@@ -14,6 +14,15 @@ server.route({
   }
 });
 
+server.route({
+  method: 'DELETE',
+  path: '/items/{id}',
+  handler: (req, reply) => {
+    // Delete "item" here, based on req.params.id
+    reply(true);
+  }
+ });
+
 server.start((err) => {
   if (err) {
     throw err;

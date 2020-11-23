@@ -11,3 +11,6 @@ app.get('/', (page, model) => {
     page.render();
   });
 });
+
+app.get('hello', '/hello');
+
