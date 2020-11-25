@@ -9,6 +9,6 @@ function hello(req, res) {
 }
 const app = connect()
   .use(hello)
-  .use(logger)
+  .use(logger) //logger will never be invoked because hello doesn’t call next().
   .listen(3000);
 
