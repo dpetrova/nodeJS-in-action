@@ -5,15 +5,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-     <!-- include navigation menu -->
-    <% include menu %>
+    <% include menu %> 
     <h1><%= title %></h1>
-    <p>Fill in the form below to add a new post.</p>
-     <!-- include messages -->
-    <% include messages %>
+    <p>Fill in the form below to add a new post.</p> 
+    <!-- <% include messages %>  -->
     <form action='/post' method='post'>
       <p>
-         <!-- entry title text -->
+        <!-- entry title text -->
         <input type='text' name='entry[title]' placeholder='Title' />
       </p>
       <p>

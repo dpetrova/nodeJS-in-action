@@ -1,11 +1,11 @@
 <entries>
   <!-- cycle through each entry -->
-<% entries.forEach(function(entry){ %>
+<% entries.forEach((entry) => { %>
   <entry>
-     <!-- output fields -->
+    <!-- output fields -->
     <title><%= entry.title %></title>
     <body><%= entry.body %></body>
     <username><%= entry.username %></username>
   </entry>
 <% }) %>
-</entries>
+</entries> 

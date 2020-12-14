@@ -1,4 +1,3 @@
-'use strict';
 const redis = require('redis');
 const bcrypt = require('bcrypt');
 const db = redis.createClient(); //create long-running Redis connection
@@ -13,27 +12,19 @@ class User {
     }
   }
 
-  //to remove sensitive user data (password and salt) as return only id and name
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name
-    };
-  }
-
   save(cb) {
     //the user already exists if an ID is set
     if (this.id) {
       this.update(cb);
-    } 
+    }
     //a new user
     else {
       //create a unique ID
       db.incr('user:ids', (err, id) => {
         if (err) return cb(err);
         //set the id so it’ll be saved by update()
-        this.id = id;
-         //hash the password
+        this.id = id; 
+        //hash the password
         this.hashPassword((err) => {
           if (err) return cb(err);
           //saves the user properties
@@ -45,7 +36,7 @@ class User {
 
   update(cb) {
     const id = this.id;
-    //index users by name
+    // /index users by name
     db.set(`user:id:${this.name}`, id, (err) => {
       if (err) return cb(err);
       //use Redis to store the current class’s properties
@@ -112,4 +103,4 @@ class User {
   }
 }
 
-module.exports = User;
+module.exports = User; //export the User class

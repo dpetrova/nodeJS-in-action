@@ -1,8 +1,9 @@
 <!-- used to display errors-->
 <% if (locals.messages) { %>
-  <% messages.forEach(function(message) { %>
+  <% messages.forEach((message) => { %>
     <p class='<%= message.type %>'><%= message.string %></p>
   <% }) %>
   <!-- after messages are displayed, removeMessages() is called to empty the messages queue -->
   <% removeMessages() %>
 <% } %>
+

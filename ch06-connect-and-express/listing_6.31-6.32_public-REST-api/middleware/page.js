@@ -1,16 +1,14 @@
-
-/* PAGINATION MIDDLEWARE */
+// pagination middleware
 
 'use strict';
 
-//cb is a passed callback function
 module.exports = (cb, perpage) => {
   //defaults to 10 per page
   perpage = perpage || 10;
   //return middleware function
   return (req, res, next) => {
-    //use the query-string ?page=N value to determine the current page 
-    let page = Math.max(parseInt(req.params.page || '1', 10), 1) - 1; //parse page param as a base 10 integer
+    //use the query-string ?page=N value to determine the current page    
+    let page = Math.max(parseInt(req.params.page || '1', 10),  1) - 1; //parse page param as a base 10 integer
     //invoke passed callback which fetches the total number of results
     cb((err, total) => {
       //delegate errors
@@ -27,5 +25,6 @@ module.exports = (cb, perpage) => {
       //pass control to next middleware component
       next();
     });
-  }
+  };
 };
+

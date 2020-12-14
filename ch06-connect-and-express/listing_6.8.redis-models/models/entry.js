@@ -1,13 +1,11 @@
 'use strict';
 const redis = require('redis');
-const db = redis.createClient(); //instantiate Redis client
-
+const db = redis.createClient();
 
 class Entry {
   constructor(obj) {
-    //iterate keys in the object passed
     for (let key in obj) {
-      this[key] = obj[key]; //merge values
+      this[key] = obj[key];
     }
   }
 
@@ -25,11 +23,9 @@ class Entry {
     });
   }
 
-   //save entry to Redis
+  //save entry to Redis
   save(cb) {
-    //convert saved entry data to JSON string
     const entryJSON = JSON.stringify(this);
-    //save JSON string to Redis list
     db.lpush(
       'entries',
       entryJSON,

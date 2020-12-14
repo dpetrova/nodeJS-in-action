@@ -1,17 +1,12 @@
 const User = require('../models/user');
 
-/* render login form */
-exports.form = (req, res) => {
-  res.render('login', { title: 'Login' });
-};
-
-/* submit login form */
+//submit login form
 exports.submit = (req, res, next) => {
   const data = req.body.user;
   //check credentials
   User.authenticate(data.name, data.pass, (err, user) => {
     //delegate errors
-    if (err) return next(err);
+    if (err) return next(err); 
     //handle a user with valid credentials
     if (user) {
       //store uid for authentication (the session will persist this value, which you can use later to retrieve the User)
@@ -20,14 +15,19 @@ exports.submit = (req, res, next) => {
       res.redirect('/');
     } else {
       //expose an error message
-      res.error('Sorry! invalid credentials.');
+      res.error('Sorry! invalid credentials. ');
       //redirect back to login form
       res.redirect('back');
     }
   });
 };
 
-/* remove the session */
+//render login form
+exports.form = (req, res) => {
+  res.render('login', { title: 'Login' });
+};
+
+//remove the session
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) throw err;
