@@ -2,16 +2,22 @@
   <head>
   <title>EJS example</title>
     <script src="ejs.js"></script>
+    <!-- include jQuery library for DOM manipulation -->
     <script
       src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js">
     </script>
   </head>
   <body>
+    <!-- placeholder forrendered template output -->
     <div id="output"></div>
     <script>
+      // template to use to render content
       const template = "<%= message %>";
+      //data to use with template
       const context = { message: 'Hello template!' };
+      //wait until browser loads page
       $(document).ready(() => {
+        //render template to div with ID “output”
         $('#output').html(
           ejs.render(template, context)
         );

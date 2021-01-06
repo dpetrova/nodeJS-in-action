@@ -1,5 +1,7 @@
 'use strict';
 
+const http = require('http');
+
 function blogPage(entries) {
   let output = `
     <html>
@@ -23,4 +25,12 @@ function blogPage(entries) {
   return output;
 }
 
-console.log(blogPage([{ title: 'test', date: 'now', body: 'hi' }]));
+const entries = [{ title: 'test', date: 'now', body: 'hi' }]
+console.log(blogPage(entries));
+
+// const server = http.createServer((req, res) => {
+//   const output = blogPage(entries);
+//   res.writeHead(200, {'Content-Type': 'text/html'});
+//   res.end(output);
+//  });
+//  server.listen(8000);

@@ -1,5 +1,7 @@
 const ejs = require('ejs');
 const fs = require('fs');
+
+//loads a template from a file
 const template = fs.readFileSync('./templates/blog_page.ejs', 'utf8');
 
 function blogPage(entries) {
