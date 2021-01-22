@@ -1,3 +1,6 @@
+/* Simple scraper that uses cheerio */
+
+//html to parse
 const html = `
 <html>
 <body>
@@ -8,9 +11,13 @@ const html = `
   </div>
 </body>
 </html>`;
+
 const cheerio = require('cheerio');
+
+//parses the entire document
 const $ = cheerio.load(html);
 
+//extracts the fields by using CSS selectors
 const book = {
   title: $('.book h2').text(),
   author: $('.book h3').text(),
